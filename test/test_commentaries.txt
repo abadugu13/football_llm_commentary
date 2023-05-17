@@ -1,0 +1,47 @@
+[Commentary]: "The left team has successfully taken control of the ball, and they're starting to build their attack."
+[Trigger]: state["ball_owned_team"] == 0 and previous_state["ball_owned_team"] != 0
+
+[Commentary]: "Right team now secures possession, and they're looking to create some scoring opportunities."
+[Trigger]: state["ball_owned_team"] == 1 and previous_state["ball_owned_team"] != 1
+
+[Commentary]: "The ball is swiftly moving towards the left goal, putting the left team's defense under pressure!"
+[Trigger]: state["ball_direction"][0] < 0 and abs(state["ball"][1]) <= 0.044
+
+[Commentary]: "The ball is rapidly heading towards the right goal, and the right team's defense needs to react quickly!"
+[Trigger]: state["ball_direction"][0] > 0 and abs(state["ball"][1]) <= 0.044
+
+[Commentary]: "And it's a goal for the left team! They take the lead with a score of {} - {}."
+[Trigger]: state["score"][0] > previous_state["score"][0]
+
+[Commentary]: "The right team scores! They're now in the lead with a score of {} - {}."
+[Trigger]: state["score"][1] > previous_state["score"][1]
+
+[Commentary]: "The left team's goalkeeper bravely intercepts the ball, preventing a dangerous situation."
+[Trigger]: state["ball_owned_team"] == 0 and state["ball_owned_player"] == state["left_team_roles"].index(0)
+
+[Commentary]: "The right team's goalkeeper confidently grabs the ball, stopping the opponents' attack."
+[Trigger]: state["ball_owned_team"] == 1 and state["ball_owned_player"] == state["right_team_roles"].index(0)
+
+[Commentary]: "The match is currently in its regular flow, both teams fighting for possession and chances."
+[Trigger]: state["game_mode"] == 0
+
+[Commentary]: "The players are set for a kickoff, and the game is about to get underway!"
+[Trigger]: state["game_mode"] == 1
+
+[Commentary]: "It's time for a goal kick, as the defending team looks to send the ball back into play."
+[Trigger]: state["game_mode"] == 2
+
+[Commentary]: "A free kick has been awarded, presenting a great scoring opportunity!"
+[Trigger]: state["game_mode"] == 3
+
+[Commentary]: "A corner kick is coming up, which could lead to a crucial goal-scoring chance!"
+[Trigger]: state["game_mode"] == 4
+
+[Commentary]: "The ball has gone out of play, and it's time for a throw-in to get the game back in action."
+[Trigger]: state["game_mode"] == 5
+
+[Commentary]: "A penalty has been given, a high-pressure situation for both the shooter and the goalkeeper!"
+[Trigger]: state["game_mode"] == 6
+
+[Commentary]: "The match is nearing its end, with only {} steps left. The tension is building!"
+[Trigger]: state["steps_left"] <= 100 and state["steps_left"] % 10 == 0
